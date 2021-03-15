@@ -39,24 +39,7 @@ class Node_ {
       this.left = new Node_(this)
       this.right = new Node_(this)
       return this
-    } /*
-    var initialLeftSpacing = this.leftNode.cumulativeRightSpacing
-    + Node.HORIZONTALSPACING;
-
-    var shiftedNode = this.leftNode.addValue(value);
-
-    this.leftSpacing = this.leftNode.cumulativeRightSpacing
-        + Node.HORIZONTALSPACING;
-
-    this.cumulativeLeftSpacing = this.leftNode.cumulativeLeftSpacing
-        + this.leftSpacing;
-
-    if(this.leftSpacing !== initialLeftSpacing) {
-        return this.leftNode;
     }
-
-    return shiftedNode;
-    */
     else if(data < this.data){
       let initialLeftSpacing = this.left.cumulativeRightSpacing + Node_.horizontalSpace
       let shiftedNode = this.left.insert(data)
@@ -69,23 +52,7 @@ class Node_ {
       
       return shiftedNode
 
-    }/*            
-    var rightSpacing = this.rightNode.cumulativeLeftSpacing
-        + Node.HORIZONTALSPACING;
-
-    var shiftedNode = this.rightNode.addValue(value);
-
-    this.rightSpacing = this.rightNode.cumulativeLeftSpacing
-        + Node.HORIZONTALSPACING;
-
-    this.cumulativeRightSpacing = this.rightNode.cumulativeRightSpacing
-        + this.rightSpacing;
-
-    if(this.rightSpacing !== rightSpacing) {
-        return this.rightNode;
     }
-
-    return shiftedNode; */
     else if(data > this.data){
       let initialRightSpacing = this.right.cumulativeLeftSpacing + Node_.horizontalSpace
       let shiftedNode = this.right.insert(data)
