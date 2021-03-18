@@ -75,9 +75,9 @@ class Node_ {
     if (this.isFilled()){
       //caso x e y nao sejam passados para a função
       if(typeof x === "undefined" && typeof y === "undefined"){
-        if(this.data < this.parent.data)
+        if(this.data < this.parent.data) 
           this.posX = this.parent.posX - this.parent.leftSpacing
-        else
+        else if(this.data > this.parent.data) 
           this.posX = this.parent.posX + this.parent.rightSpacing
         
         this.posY = this.parent.posY + Node_.verticalSpace
@@ -89,6 +89,15 @@ class Node_ {
       this.left.setPositions()
       this.right.setPositions()
     }
+  }
+
+  search(key){
+    if(this.isFilled){
+      if(key === this.data) return this
+      else if(key < this.data) this.left.search(key)
+      else if(key > this.data) this.right.search(key)
+    }
+    else return false
   }
 
   drawNode(){
