@@ -1,13 +1,29 @@
 
 class Node_ {
 
+  static SIZE = 20
+  static COLOR = color(255, 255, 255)
+  static STROKE = color(0, 0, 0, 0)
+  static TEXTSIZE = 10           
+  static TEXTCOLOR = color(0, 0, 0)
+  static EDGECOLOR = color(0, 0, 0)
+  static EDGETHICKNESS = 2        
+
+  static VISITED = color(0, 0, 255)
+  static SUCCESS = color(0, 255, 0)
+                                   
+  static FAILURE = color(255, 0, 0)
+
   static  horizontalSpace = 25
   static  verticalSpace = 75
 
-  constructor(parent) {
+  constructor(parent = null, size = Node.SIZE,
+              color = Node.COLOR, stroke = Node.STROKE,
+              stroke = Node.STROKE, textSize = Node.TEXTSIZE,
+              textColor = Node.TEXTCOLOR, edgeColor = Node.EDGECOLOR,)
+    {
     this.data = null
     this.parent =  parent
-    this.left = null
     this.right = null
 
     this.posX = null
@@ -101,22 +117,25 @@ class Node_ {
   }
 
   drawNode(){
-    fill(255, 0, 0);
-    stroke(255, 0, 0);
-    ellipse(this.posX, this.posY, 35, 35);
+        fill(this.color)
+        stroke(this.stroke)
+        ellipse(this.x, this.y, this.size, this.size)
+        
+        noStroke()
+        fill(this.textColor)
+        textAlign(CENTER, CENTER)
+        textSize(this.textSize)
+        text(this.value, this.x, this.y + 1)
+  }
 
-    noStroke();
-    fill(0);
-    textAlign(CENTER, CENTER);
-    textSize(12);
-    text(this.data, this.posX, this.posY);
-}
   drawConnection(){
     if(this.hasParent()){
-      stroke(0, 0, 0);
+      stroke(this.edgeColor)
+      strokeWeight(this.edgeThickness)
       line(this.posX,this.posY,this.parent.posX,this.parent.posY)
     }
   }
+
   draw(){
       if(this.isFilled()){
 
@@ -126,5 +145,46 @@ class Node_ {
         this.drawConnection()
         this.drawNode()
       }
+  }
+
+  redraw(){
+    if(this.isFilled()){
+      this.drawConnection()
+      this.drawNode()
+      
+      if(this.hasParent()) this.parent.drawNode()
+    }
+  }
+
+  recursivePaint(color){
+    if(this.isFilled()){
+      this.color = color
+      this.edgeColor = color
+      this.right.recursivePaint(color)
+      this.leftSpacing.recursivePaint(color)
+    }
+  }
+
+  paint(color){
+    this.color = color
+    this.edgeColor = color
+    
+    this.redraw()
+  }
+
+  resetVisuals(){
+    if(this.isFilled()){
+      this.size = Node.SIZE
+      this.color = Node.COLOR
+      this.stroke = Node.STROKE
+      this.textSize = Node.TEXTSIZE
+      this.textColor = Node.TEXTCOLOR
+
+      this.edgeColor = Node.EDGECOLOR
+      this.edgeThickness = Node.EDGETHICKNESS
+
+      this.leftNode.resetVisuals()
+      this.rightNode.resetVisuals()    
+    }
   }
 }
