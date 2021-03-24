@@ -1,8 +1,8 @@
 
 class Node_ {
 
-  static SIZE = 20
-  static COLOR = color(255, 255, 255)
+  static SIZE = 35
+  static COLOR = "#93B895"
   static STROKE = color(0, 0, 0, 0)
   static TEXTSIZE = 10           
   static TEXTCOLOR = color(0, 0, 0)
@@ -17,11 +17,19 @@ class Node_ {
   static  horizontalSpace = 25
   static  verticalSpace = 75
 
-  constructor(parent = null, size = Node.SIZE,
-              color = Node.COLOR, stroke = Node.STROKE,
-              stroke = Node.STROKE, textSize = Node.TEXTSIZE,
-              textColor = Node.TEXTCOLOR, edgeColor = Node.EDGECOLOR,)
+  constructor(parent, 
+              color = Node_.COLOR, size = Node_.SIZE,
+              stroke = Node_.STROKE, textSize = Node_.TEXTSIZE,
+              textColor = Node_.TEXTCOLOR, edgeColor = Node_.EDGECOLOR)
     {
+
+    this.color = color
+    this.size = size
+    this.stroke = stroke
+    this.textSize = textSize
+    this.textColor = textColor
+    this.edgeColor = edgeColor
+
     this.data = null
     this.parent =  parent
     this.right = null
@@ -60,8 +68,8 @@ class Node_ {
       let initialLeftSpacing = this.left.cumulativeRightSpacing + Node_.horizontalSpace
       let shiftedNode = this.left.insert(data)
 
-      this.leftSpacing = this.left.cumulativeRightSpacing + Node_.horizontalSpace
-      this.cumulativeLeftSpacing = this.left.cumulativeRightSpacing + this.leftSpacing
+      this.leftSpacing = this.left.cumulativeRightSpacing + Node_.horizontalSpace 
+      this.cumulativeLeftSpacing = this.left.cumulativeLeftSpacing + this.leftSpacing
 
       if(this.leftSpacing !== initialLeftSpacing)
         return this.left
@@ -81,7 +89,7 @@ class Node_ {
       
       return shiftedNode
 
-    }      
+    }
     else if (data === this.data){
       console.log("You fucked up, the data already exists maaan")
     }
@@ -110,13 +118,13 @@ class Node_ {
   search(key){
     if(this.isFilled){
       if(key === this.data) return this
-      else if(key < this.data) this.left.search(key)
-      else if(key > this.data) this.right.search(key)
+      else if(key < this.data && this.left) this.left.search(key)
+      else if(key > this.data && this.right) this.right.search(key)
     }
     else return false
   }
 
-  drawNode(){
+  /*drawNode(){
         fill(this.color)
         stroke(this.stroke)
         ellipse(this.x, this.y, this.size, this.size)
@@ -134,7 +142,7 @@ class Node_ {
       strokeWeight(this.edgeThickness)
       line(this.posX,this.posY,this.parent.posX,this.parent.posY)
     }
-  }
+  }*/
 
   draw(){
       if(this.isFilled()){
@@ -146,7 +154,22 @@ class Node_ {
         this.drawNode()
       }
   }
-
+  drawNode(){
+    fill(Node_.COLOR);
+    stroke(255, 0, 0);
+    ellipse(this.posX, this.posY, 35, 35);
+    noStroke();
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(12);
+    text(this.data, this.posX, this.posY + 1);
+}
+  drawConnection(){
+    if(this.hasParent()){
+      stroke(0, 0, 0);
+      line(this.posX,this.posY,this.parent.posX,this.parent.posY)
+    }
+  }
   redraw(){
     if(this.isFilled()){
       this.drawConnection()
