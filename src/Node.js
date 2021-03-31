@@ -206,8 +206,8 @@ class Node_ {
       this.edgeColor = Node.EDGECOLOR
       this.edgeThickness = Node.EDGETHICKNESS
 
-      this.leftNode.resetVisuals()
-      this.rightNode.resetVisuals()    
+      if(this.left.isFilled()) this.leftNode.resetVisuals()
+      if(this.right.isFilled()) this.rightNode.resetVisuals()    
     }
   }
 }
