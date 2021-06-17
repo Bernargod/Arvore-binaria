@@ -54,60 +54,16 @@ class Tree{
     }
 
     updateDrawing(){
-        image(0,0)
+        image(this, 0, 0)
     }
-//--------Stuff------------
-    
-    fill(count) {
-        this.clear()
 
-        for(let i = 0; i < count; i++){
-            this.insert(this.uniqueRandom())
-        }
-        this.draw();
-    }
 //--------Animação-----------
-    startAnimation(frame,...args){
-        if(this.running)
-            throw Error('Animação em progresso')
-        else{
-            this.running = true
-            this.node = this.root
 
-            this.resetVisuals()
-            this.continueAnimation(frame.bind(this),...args)
-        }
-    }
-    continueAnimation(frame,...args){
-        this.timeout = setTimeout(()=>frame.bind(this)(...args),
-            this.controls.animationInterval)
-    }
-    stopAnimation(comlpete = ()=>{},...callbackArgs){
-        this.running = false
-        this.node = null
-        clearTimeout(this.timeout)
-        setTimeout(()=> comlpete(...callbackArgs),this.controls.animationInterval)
-    }
-    addValueVisual(value,comlpete = ()=>{},...callbackArgs){
-        this.startAnimation(this.addValueFrame,value,comlpete,...callbackArgs)
-    }
-    addValueFrame(value,complete,...callbackArgs){
-        if(!this.node.isFilled()){
-            this.insert(value)
-            this.node.paint(Node_.SUCCESS)
+    multiInsert(loopVal){
+        if(loopVal !== 0){
+            this.insert(this.uniqueRandom())
             this.draw()
-            this.stopAnimation(complete,...callbackArgs)
-        }else{
-            this.node.paint(Node_.VISITED)
-            this.updateDrawing()
-
-            if(value < this.node.data)
-                this.node = this.node.left
-            else if(vaue > this.node.data)
-                this.node = this.node.right
-
-            this.continueAnimation(this.addValueFrame,value,complete,...callbackArgs)
-        }
-
+            setTimeout(()=> this.multiInsert(loopVal - 1), 1000);
+            }
     }
 }

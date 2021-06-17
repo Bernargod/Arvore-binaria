@@ -4,20 +4,50 @@ class Controls{
         this.tree.bindControls(this)
 
         this.addBtn = document.getElementById("add-btn")
-        this.addBtn.addEventListener('click', () => this.addTemporario())
+        this.addBtn.addEventListener('click', () => this.addNode())
 
-        this.yooBtn = document.getElementById("yoo")
-        this.yooBtn.addEventListener('click',() => this.testFunc())
+        this.addMBtn = document.getElementById("add-multiple")
+        this.addMBtn.addEventListener('click',() => this.addMultiple())
+
+        this.clearBtn = document.getElementById("clear-btn")
+        .addEventListener('click',()=>this.clearTree())    
+    }
+    getNumber(text) {
+        let value = prompt(text);
+
+        if(value === null) {
+            return null;
+        } else if(isNaN(parseInt(value)) || value === "" || parseInt(value) < 0) {
+            alert('Por favor insira um valor válido');
+            return null;
+        } else {
+            return parseInt(value);
+        }
     }
 
-    addTemporario(){
-        this.tree.addValueVisual(this.tree.uniqueRandom())
-        //this.tree.insert(this.tree.uniqueRandom())
-        //this.tree.draw()
+    addNode(){
+        let value = this.getNumber("Que valor deseja adicionar a arvore?")
+        if(!this.tree.search(value)){
+            this.tree.insert(value)
+            this.tree.draw()
+        }
+        else{
+            alert("Valor ja está presente na arvore")
+        }
+        
+        
     }
-    testFunc(){
-        this.tree.resetVisuals()
+    addMultiple(){
+        let iterations = this.getNumber("Quantos nós deseja adicionar a arvore?")
+        if(iterations)
+            this.tree.multiInsert(iterations)
     }
+    clearTree(){
+        this.tree.clear()
+        this.tree.draw()
+    }
+
+
 
 
 }

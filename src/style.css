@@ -1,8 +1,19 @@
 html, body {
   margin: 0;
   padding: 0;
+  background-color: #bdfcfa;
 }
 
 canvas {
   display: block;
+}
+button{
+  position: relative;
+  left: 10px;
+  top: 10px;
+  height: 40px;
+  width: 70px;
+}
+#add-multiple{
+  top: 18px;
 }

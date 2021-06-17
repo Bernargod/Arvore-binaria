@@ -1,35 +1,24 @@
 
 class Node_ {
 
-  static SIZE = 35
-  static COLOR = "#93B895"
-  static STROKE = color(0, 0, 0, 0)
-  static TEXTSIZE = 10           
+  static SIZE = 40
+  static COLOR = "#bdb9b6"
+  static STROKE = "#000000"
+  static TEXTSIZE = 17           
   static TEXTCOLOR = color(0, 0, 0)
   static EDGECOLOR = color(0, 0, 0)
   static EDGETHICKNESS = 2        
 
-  static VISITED = color(0, 0, 255)
-  static SUCCESS = color(0, 255, 0)
-                                   
-  static FAILURE = color(255, 0, 0)
+  static VISITED = "#6d6de3"
+  static SUCCESS = "#aded47"                                  
+  static FAILURE = "#f04d4d"
 
-  static  horizontalSpace = 25
-  static  verticalSpace = 75
+  static  horizontalSpace = 35
+  static  verticalSpace = 55
 
-  constructor(parent, 
-              color = Node_.COLOR, size = Node_.SIZE,
-              stroke = Node_.STROKE, textSize = Node_.TEXTSIZE,
-              textColor = Node_.TEXTCOLOR, edgeColor = Node_.EDGECOLOR)
+  constructor(parent, color,stroke,size,textColor
+              ,textSize,edgeColor,edgeThickness)
     {
-
-    this.color = color
-    this.size = size
-    this.stroke = stroke
-    this.textSize = textSize
-    this.textColor = textColor
-    this.edgeColor = edgeColor
-
     this.data = null
     this.parent =  parent
     this.right = null
@@ -43,8 +32,13 @@ class Node_ {
     this.cumulativeLeftSpacing = 0
     this.cumulativeRightSpacing= 0
 
-    
-
+    this.color = Node_.COLOR
+    this.stroke = Node_.STROKE
+    this.size = Node_.SIZE
+    this.textColor = Node_.TEXTCOLOR
+    this.textSize = Node_.TEXTSIZE
+    this.edgeColor = Node_.EDGECOLOR
+    this.edgeThickness = Node_.EDGETHICKNESS
   }
   //draw node vai ter que pegar a poição x e y do node para desenha-lo
   //as posições x e y começarao a partir do root, e depois disso cada um tera um posição diferente, baseado em qual lado da arvore o node sera inserido
@@ -115,34 +109,20 @@ class Node_ {
     }
   }
 
-  search(key){
-    if(this.isFilled){
-      if(key === this.data) return this
-      else if(key < this.data && this.left) this.left.search(key)
-      else if(key > this.data && this.right) this.right.search(key)
-    }
-    else return false
-  }
+  search(key) {
+    if (!this.isFilled()) {
+        return false;
 
-  /*drawNode(){
-        fill(this.color)
-        stroke(this.stroke)
-        ellipse(this.x, this.y, this.size, this.size)
-        
-        noStroke()
-        fill(this.textColor)
-        textAlign(CENTER, CENTER)
-        textSize(this.textSize)
-        text(this.value, this.x, this.y + 1)
-  }
+    } else if (this.data === key) {
+        return true;
 
-  drawConnection(){
-    if(this.hasParent()){
-      stroke(this.edgeColor)
-      strokeWeight(this.edgeThickness)
-      line(this.posX,this.posY,this.parent.posX,this.parent.posY)
+    } else if (key < this.data ) {
+        return this.left.search(key);
+
+    } else if (key > this.data) {
+        return this.right.search(key);
     }
-  }*/
+}
 
   draw(){
       if(this.isFilled()){
@@ -155,18 +135,19 @@ class Node_ {
       }
   }
   drawNode(){
-    fill(Node_.COLOR);
-    stroke(255, 0, 0);
-    ellipse(this.posX, this.posY, 35, 35);
+    fill(this.color);
+    stroke(this.stroke);
+    strokeWeight(this.edgeThickness)
+    ellipse(this.posX, this.posY, this.size, this.size);
     noStroke();
     fill(0);
     textAlign(CENTER, CENTER);
-    textSize(12);
+    textSize(this.textSize);
     text(this.data, this.posX, this.posY + 1);
 }
   drawConnection(){
     if(this.hasParent()){
-      stroke(0, 0, 0);
+      stroke(this.stroke);
       line(this.posX,this.posY,this.parent.posX,this.parent.posY)
     }
   }
@@ -179,35 +160,4 @@ class Node_ {
     }
   }
 
-  recursivePaint(color){
-    if(this.isFilled()){
-      this.color = color
-      this.edgeColor = color
-      this.right.recursivePaint(color)
-      this.leftSpacing.recursivePaint(color)
-    }
   }
-
-  paint(color){
-    this.color = color
-    this.edgeColor = color
-    
-    this.redraw()
-  }
-
-  resetVisuals(){
-    if(this.isFilled()){
-      this.size = Node.SIZE
-      this.color = Node.COLOR
-      this.stroke = Node.STROKE
-      this.textSize = Node.TEXTSIZE
-      this.textColor = Node.TEXTCOLOR
-
-      this.edgeColor = Node.EDGECOLOR
-      this.edgeThickness = Node.EDGETHICKNESS
-
-      if(this.left.isFilled()) this.leftNode.resetVisuals()
-      if(this.right.isFilled()) this.rightNode.resetVisuals()    
-    }
-  }
-}
