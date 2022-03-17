@@ -5,7 +5,9 @@ Após fazer o download dos arquivos, extraia-os da pasta compactada.
 
 Para rodar o programa, basta executar o arquivo "Index.html"
 
+
 No programa, existem 3 botoes que executarão as funcionalidas da arvore binária, estes sendo:
+
 
 Adicionar:
 
